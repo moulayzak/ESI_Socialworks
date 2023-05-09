@@ -27,9 +27,14 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ("email",)
     ordering = ("email",)
 
-
 admin.site.register(User, CustomUserAdmin)
-admin.site.register(Chapter)
-admin.site.register(Section)
-admin.site.register(SocialWork)
-admin.site.register(The_Budget)
+class BAdmin(admin.ModelAdmin):
+    readonly_fields = ('id',)
+
+admin.site.register(The_Budget, BAdmin)
+admin.site.register(SocialWork, BAdmin)
+admin.site.register(Section, BAdmin)
+admin.site.register(Chapter, BAdmin)
+admin.site.register(Request, BAdmin)
+admin.site.register(Transaction, BAdmin)
+
