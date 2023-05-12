@@ -16,7 +16,7 @@ class User(AbstractUser):
 
     REQUIRED_FIELDS = ['email']
       
-class The_Budget(models.Model):
+class Fund(models.Model):
     
     total_budget = models.IntegerField(default=0)
     Allocated_Divisions_Amount = models.IntegerField(default=0)
@@ -90,20 +90,17 @@ class Transaction(models.Model):
     )  
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE,null = True)
     request = models.ForeignKey(Request, on_delete=models.CASCADE,null = True)
-    budget = models.ForeignKey(The_Budget, on_delete=models.CASCADE,null = True)
+    budget = models.ForeignKey(Fund, on_delete=models.CASCADE,null = True)
     type = models.CharField(max_length=10, choices=TRANSACTION_TYPE)
     payment_method = models.CharField(max_length=50, choices=PAYMENT_TYPE)
     date = models.DateTimeField()
     amount = models.IntegerField()
-    total_income_balance = models.IntegerField(null=True)
-    total_allocated_balance = models.IntegerField(null=True)
-    total_withdrawn_payouts_balance = models.IntegerField(null=True)
     recipe_name = models.CharField(max_length=50,null=True)
 class Event(models.Model):
     
     user = models.ForeignKey(User , on_delete=models.CASCADE)
     title = models.CharField(max_length=100,null=True)
-    location = models.CharField(max_length=100)
+    location = models.CharField(max_length=100,null=True)
     start_date = models.DateField( auto_now=False, auto_now_add=False,null=True)
     end_date = models.DateField(auto_now=False, auto_now_add=False)
     image = models.ImageField(upload_to=None,null=True)

@@ -31,7 +31,7 @@ admin.site.register(User, CustomUserAdmin)
 class BAdmin(admin.ModelAdmin):
     readonly_fields = ('id',)
 
-admin.site.register(The_Budget, BAdmin)
+admin.site.register(Fund, BAdmin)
 admin.site.register(Program, BAdmin)
 admin.site.register(Chapter, BAdmin)
 admin.site.register(Division, BAdmin)

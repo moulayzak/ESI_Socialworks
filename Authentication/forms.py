@@ -16,12 +16,12 @@ class CustomUserChangeForm(UserChangeForm):
         model = User
         fields = ("email","first_name",)
 
-class The_BudgetForm(forms.ModelForm):
+class FundForm(forms.ModelForm):
     
     total_budget = forms.CharField(disabled=True)
 
     class Meta():
-        model = The_Budget
+        model = Fund
         fields = [  'total_budget',
                     'Allocated_Divisions_Amount',
                     'remaining_budget',
@@ -55,7 +55,7 @@ class RequestForm(forms.ModelForm):
 class TransactionForm(forms.ModelForm):
     class Meta():
         model = Transaction
-        fields = ['id','chapter','budget','request','type','payment_method','amount','total_income_balance','total_allocated_balance','total_withdrawn_payouts_balance','recipe_name','date']          
+        fields = ['id','chapter','budget','request','type','payment_method','amount','recipe_name','date']          
 
 class EventForm(forms.ModelForm):
     class Meta():
