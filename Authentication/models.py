@@ -7,35 +7,30 @@ import uuid
 
 class User(AbstractUser):
     
-    username = models.CharField(max_length=50,null=True,default="Employee",unique=True)
+    username = models.CharField(max_length=50,null=True,default="Employee",unique=True, verbose_name="Name & Surname")
     email = models.EmailField(_('email address'))
     address = models.CharField( max_length=50, null=True)
-    phone = PhoneField(blank=True, help_text='Contact phone number')
-    province = models.CharField( max_length=50, null=True)
-    city = models.CharField( max_length=50, null=True)
+    phone_number = PhoneField(blank=True, help_text='Contact phone number')
+    creation_date = models.DateTimeField(null=True)
     
 
     REQUIRED_FIELDS = ['email']
       
 class The_Budget(models.Model):
     
-    
-    INITIAL_BALANCE = models.IntegerField(default=0)
-    current_balance = models.IntegerField(default=0)
-    CHAPTERS_INITIAL_BALANCE = models.IntegerField(default=0)
-    chapters_current_balance = models.IntegerField(default=0)
-    added_balance = models.IntegerField(default=0)
+    total_budget = models.IntegerField(default=0)
+    Allocated_Divisions_Amount = models.IntegerField(default=0)
+    remaining_budget = models.IntegerField(default=0)
     date = models.DateTimeField()     
 # current_balance = INITIAL_BALANCE - CHAPTERS_INITIAL_BALANCE + added_balance    
 # chapters_current_balance -= withdrawn_balance 
 # INITIAL_BALANCE += added_balance      
-    
-class Chapter(models.Model):
+        
+class Division(models.Model):
     
     title = models.CharField(max_length=50)
-    INITIAL_BALANCE = models.IntegerField(default=0)
-    current_balance = models.IntegerField(default=0)
-    added_balance = models.IntegerField(default=0)
+    allocated_amount = models.IntegerField(default=0)
+    remaining_allocated_amount = models.IntegerField(default=0)
     
     def __str__(self):
         return self.title
@@ -44,60 +39,80 @@ class Chapter(models.Model):
 # current_balance = INITIAL_BALANCE - withdrawn_balance
 # budget.withdrawn_balance += withdrawn_balance    
 
-class Section(models.Model):
+class Chapter(models.Model):
     
     title = models.CharField(max_length=50)   
-    chapter = models.ForeignKey(Chapter, on_delete = models.CASCADE) 
-    INITIAL_BALANCE = models.IntegerField(default=0)
-    current_balance = models.IntegerField(default=0)
-    added_balance = models.IntegerField(default=0)
+    division = models.ForeignKey(Division, on_delete = models.CASCADE) 
+    allocated_amount = models.IntegerField(default=0)
+    remaining_allocated_amount = models.IntegerField(default=0)
     GRANT = models.IntegerField()
     
     def __str__(self):
         return self.title
     
-class SocialWork(models.Model):
-    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE,null = True)
-    section = models.ForeignKey(Section, on_delete=models.CASCADE)
+class Program(models.Model):
+    
+    division = models.ForeignKey(Division, on_delete=models.CASCADE,null = True)
+    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
     description = models.TextField(max_length=100)
-    start_date = models.DateField( auto_now=False, auto_now_add=False)
-    end_date = models.DateField(auto_now=False, auto_now_add=False)  
     
     def __str__(self):
-        return self.section.title
+        return self.chapter.title
 
 
 class Request(models.Model):
     
     STATUS_CHOICES = (
-        ('PENDING', 'Pending'),
-        ('APPROVED', 'Approved'),
+        ('PENDING ', 'Pending'),
+        ('ACCEPTED', 'accepted'),
         ('REJECTED', 'Rejected'),
+        ('PAID','paid')
     )
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='requests')
-    social_work = models.ForeignKey(SocialWork, on_delete=models.CASCADE)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='PENDING')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    program = models.ForeignKey(Program, on_delete=models.CASCADE)
+    status = models.CharField(max_length=10,choices=STATUS_CHOICES, default='PENDING')
     date = models.DateTimeField()
+    note = models.CharField(max_length=1000,null=True)
     files = models.FileField(upload_to=None)
     
 class Transaction(models.Model):
     
     TRANSACTION_TYPE = (
         ('ALLOCATION', 'allocation'),
-        ('PAYOUT', 'payout')
+        ('PAYOUT', 'payout'),
+        ('TRANSFER', 'tranfer'),
+        ('INCOME', 'income'),
     )
     PAYMENT_TYPE = (
-        ('ESPECE', 'espece'),
-    )
-    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)  
+        ('CASH', 'cash'),
+        ('BANK_TRANSFER', 'bank_transfer'),
+        ('CHECK', 'check'),
+    )  
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE,null = True)
-    section = models.ForeignKey(Section, on_delete=models.CASCADE,null = True)
     request = models.ForeignKey(Request, on_delete=models.CASCADE,null = True)
     budget = models.ForeignKey(The_Budget, on_delete=models.CASCADE,null = True)
     type = models.CharField(max_length=10, choices=TRANSACTION_TYPE)
-    payment_method = models.CharField(max_length=10, choices=PAYMENT_TYPE)
+    payment_method = models.CharField(max_length=50, choices=PAYMENT_TYPE)
     date = models.DateTimeField()
     amount = models.IntegerField()
-    description = models.TextField(max_length=100)
-    withdrawn_balance =  models.IntegerField()
-    allocated_withdrawn_balance = models.IntegerField()
+    total_income_balance = models.IntegerField(null=True)
+    total_allocated_balance = models.IntegerField(null=True)
+    total_withdrawn_payouts_balance = models.IntegerField(null=True)
+    recipe_name = models.CharField(max_length=50,null=True)
+class Event(models.Model):
+    
+    user = models.ForeignKey(User , on_delete=models.CASCADE)
+    title = models.CharField(max_length=100,null=True)
+    location = models.CharField(max_length=100)
+    start_date = models.DateField( auto_now=False, auto_now_add=False,null=True)
+    end_date = models.DateField(auto_now=False, auto_now_add=False)
+    image = models.ImageField(upload_to=None,null=True)
+    description = models.TextField()
+    
+    
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notification')
+    request = models.ForeignKey(Request , on_delete=models.CASCADE,null=True)
+    event = models.ForeignKey(Event , on_delete=models.CASCADE,null=True)
+    description = models.TextField()
+    date = models.DateTimeField()

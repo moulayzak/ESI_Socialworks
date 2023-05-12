@@ -9,17 +9,17 @@ class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = User
-    list_display = ("email", "username", "is_staff", "is_active",)
-    list_filter = ("email", "username", "is_staff", "is_active",)
+    list_display = ("email", "username","creation_date", "is_staff", "is_active",)
+    list_filter = ("email", "username","creation_date", "is_staff", "is_active",)
     fieldsets = (
-        (None, {"fields": ("email","username", "phone", "address", "province", "city", "password")}),
+        (None, {"fields": ("email","username", "phone_number", "address", "password")}),
         ("Permissions", {"fields": ("is_staff", "is_active", "groups", "user_permissions")}),
     )
     add_fieldsets = (
         (None, {
             "classes": ("wide",),
             "fields": (
-                "email", "username", "phone", "address", "province", "city", "password1", "password2", "is_staff",
+                "email", "username", "phone_number", "address","creation_date", "password1", "password2", "is_staff",
                 "is_active", "groups", "user_permissions"
             )}
         ),
@@ -32,9 +32,12 @@ class BAdmin(admin.ModelAdmin):
     readonly_fields = ('id',)
 
 admin.site.register(The_Budget, BAdmin)
-admin.site.register(SocialWork, BAdmin)
-admin.site.register(Section, BAdmin)
+admin.site.register(Program, BAdmin)
 admin.site.register(Chapter, BAdmin)
+admin.site.register(Division, BAdmin)
 admin.site.register(Request, BAdmin)
 admin.site.register(Transaction, BAdmin)
+admin.site.register(Event,BAdmin)
+
+admin.site.register(Notification,BAdmin)
 
