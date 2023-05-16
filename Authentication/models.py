@@ -15,13 +15,13 @@ class User(AbstractUser):
     
 
     REQUIRED_FIELDS = ['email']
-      
+
+class Admin(User):
+    pass      
 class Fund(models.Model):
     
     total_budget = models.IntegerField(default=0)
-    Allocated_Divisions_Amount = models.IntegerField(default=0)
     remaining_budget = models.IntegerField(default=0)
-    date = models.DateTimeField()     
 # current_balance = INITIAL_BALANCE - CHAPTERS_INITIAL_BALANCE + added_balance    
 # chapters_current_balance -= withdrawn_balance 
 # INITIAL_BALANCE += added_balance      

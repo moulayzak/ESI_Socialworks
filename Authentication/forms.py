@@ -9,7 +9,11 @@ class CustomUserCreationForm(UserCreationForm):
         model = User
         fields =  ("email","username",)
 
+class CustomAdminCreationForm(UserCreationForm):
 
+    class Meta:
+        model = Admin
+        fields =  ("email","username",)
 class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
@@ -23,9 +27,7 @@ class FundForm(forms.ModelForm):
     class Meta():
         model = Fund
         fields = [  'total_budget',
-                    'Allocated_Divisions_Amount',
                     'remaining_budget',
-                    'date',
                   ]     
 
 class DivisionForm(forms.ModelForm):

@@ -28,6 +28,7 @@ class CustomUserAdmin(UserAdmin):
     ordering = ("email",)
 
 admin.site.register(User, CustomUserAdmin)
+admin.site.register(Admin,CustomUserAdmin)
 class BAdmin(admin.ModelAdmin):
     readonly_fields = ('id',)
 
