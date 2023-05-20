@@ -34,8 +34,8 @@ class BAdmin(admin.ModelAdmin):
 
 admin.site.register(Fund, BAdmin)
 admin.site.register(Program, BAdmin)
+admin.site.register(Article, BAdmin)
 admin.site.register(Chapter, BAdmin)
-admin.site.register(Division, BAdmin)
 admin.site.register(Request, BAdmin)
 admin.site.register(Transaction, BAdmin)
 admin.site.register(Event,BAdmin)

@@ -14,20 +14,20 @@ class FundSerializer(serializers.ModelSerializer):
         model = Fund
         fields = '__all__'
             
-class DivisionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Division
-        fields = '__all__'     
-
 class ChapterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Chapter
+        fields = '__all__'     
+
+class ArticleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Article
         fields = '__all__'  
             
 class ProgramSerializer(serializers.ModelSerializer):
     class Meta:
         model = Program
-        fields = '__all__'  
+        fields = ['chapter','description'] 
             
 class RequestSerializer(serializers.ModelSerializer):
     class Meta:

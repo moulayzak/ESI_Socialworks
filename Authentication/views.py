@@ -189,44 +189,6 @@ def FundDelete(request, pk):
     return Response('Object Deleted .')
 
 
-#------------------Division_views---------------------------
-
-@api_view(['GET'])
-def DivisionList(request):
-    divisions = Division.objects.all().order_by('-id')
-    serializer = DivisionSerializer(divisions,many=True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-def DivisionDetail(request, pk):
-    divisions = Division.objects.get(id=pk)
-    serializer = DivisionSerializer(divisions,many=False)
-    return Response(serializer.data)
-
-@api_view(['POST'])
-def DivisionCreate(request):
-    serializer = DivisionSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-    return Response(serializer.data)
-
-@api_view(['POST'])
-def DivisionUpdate(request, pk):
-    division = Division.objects.get(id=pk)
-    serializer = DivisionSerializer(instance=division, data=request.data)
-    
-    if serializer.is_valid():
-        serializer.save()
-        
-    return Response(serializer.data)
-
-@api_view(['DELETE'])
-def DivisionDelete(request, pk):
-    division = Division.objects.get(id=pk)
-    division.delete()
-    
-    return Response('Object Deleted .')
-
 #------------------Chapter_views---------------------------
 
 @api_view(['GET'])
@@ -262,6 +224,44 @@ def ChapterUpdate(request, pk):
 def ChapterDelete(request, pk):
     chapter = Chapter.objects.get(id=pk)
     chapter.delete()
+    
+    return Response('Object Deleted .')
+
+#------------------article_views---------------------------
+
+@api_view(['GET'])
+def ArticleList(request):
+    articles = Article.objects.all().order_by('-id')
+    serializer = ArticleSerializer(articles,many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def ArticleDetail(request, pk):
+    articles = Article.objects.get(id=pk)
+    serializer = ArticleSerializer(articles,many=False)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def ArticleCreate(request):
+    serializer = ArticleSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def ArticleUpdate(request, pk):
+    article = Article.objects.get(id=pk)
+    serializer = ArticleSerializer(instance=article, data=request.data)
+    
+    if serializer.is_valid():
+        serializer.save()
+        
+    return Response(serializer.data)
+
+@api_view(['DELETE'])
+def ArticleDelete(request, pk):
+    article = Article.objects.get(id=pk)
+    article.delete()
     
     return Response('Object Deleted .')
 

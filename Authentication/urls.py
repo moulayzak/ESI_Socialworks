@@ -37,21 +37,21 @@ urlpatterns = [
     path('fund/update/<str:pk>/',views.FundUpdate,name='fund-update'),
     path('fund/delete/<str:pk>/',views.FundDelete,name='fund-delete'),
 
-    #------------------Division_urls---------------------------
-    
-    path('division/',views.DivisionList,name='division-list'),
-    path('division/details/<str:pk>/',views.DivisionDetail,name='division-detail'),
-    path('division/create/',views.DivisionCreate,name='division-create'),
-    path('division/update/<str:pk>/',views.DivisionUpdate,name='division-update'),
-    path('division/delete/<str:pk>/',views.DivisionDelete,name='division-delete'),  
-    
-    #------------------Chapter_urls---------------------------
+    #------------------chapter_urls---------------------------
     
     path('chapter/',views.ChapterList,name='chapter-list'),
     path('chapter/details/<str:pk>/',views.ChapterDetail,name='chapter-detail'),
     path('chapter/create/',views.ChapterCreate,name='chapter-create'),
     path('chapter/update/<str:pk>/',views.ChapterUpdate,name='chapter-update'),
     path('chapter/delete/<str:pk>/',views.ChapterDelete,name='chapter-delete'),  
+    
+    #------------------article_urls---------------------------
+    
+    path('article/',views.ArticleList,name='article-list'),
+    path('article/details/<str:pk>/',views.ArticleDetail,name='article-detail'),
+    path('article/create/',views.ArticleCreate,name='article-create'),
+    path('article/update/<str:pk>/',views.ArticleUpdate,name='article-update'),
+    path('article/delete/<str:pk>/',views.ArticleDelete,name='article-delete'),  
               
     #------------------Program_urls---------------------------
     
