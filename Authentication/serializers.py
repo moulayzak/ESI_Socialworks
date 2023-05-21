@@ -6,9 +6,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
 
-class AdminSerializer(UserSerializer):
-    pass       
-
 class FundSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fund

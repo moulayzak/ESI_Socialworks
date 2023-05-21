@@ -112,44 +112,6 @@ def UserDelete(request, pk):
     
     return Response('Object Deleted .')
 
-#------------------Admin_views---------------------------
-
-@api_view(['GET'])
-def AdminList(request):
-    admins = Admin.objects.all().order_by('-id')
-    serializer = AdminSerializer(admins,many=True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-def AdminDetail(request, pk):
-    admins = Admin.objects.get(id=pk)
-    serializer = AdminSerializer(admins,many=False)
-    return Response(serializer.data)
-
-@api_view(['POST'])
-def AdminCreate(request):
-    serializer = AdminSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-    return Response(serializer.data)
-
-@api_view(['POST'])
-def AdminUpdate(request, pk):
-    admin = Admin.objects.get(id=pk)
-    serializer = AdminSerializer(instance=admin, data=request.data)
-    
-    if serializer.is_valid():
-        serializer.save()
-        
-    return Response(serializer.data)
-
-@api_view(['DELETE'])
-def AdminDelete(request, pk):
-    admin = Admin.objects.get(id=pk)
-    admin.delete()
-    
-    return Response('Object Deleted .')
-
 #------------------fund_views---------------------------
 
 @api_view(['GET'])

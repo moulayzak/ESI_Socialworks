@@ -22,13 +22,6 @@ urlpatterns = [
     path('user/update/<str:pk>/',views.UserUpdate,name='user-update'),
     path('user/delete/<str:pk>/',views.UserDelete,name='user-delete'),
 
-    #------------------Admin_urls---------------------------
-    path('admin_u/',views.AdminList,name='admin-list'),
-    path('admin_u/details/<str:pk>/',views.AdminDetail,name='admin-detail'),
-    path('admin_u/create/',views.AdminCreate,name='admin-create'),
-    path('admin_u/update/<str:pk>/',views.AdminUpdate,name='admin-update'),
-    path('admin_u/delete/<str:pk>/',views.AdminDelete,name='admin-delete'),
-    
     #------------------Fund_urls---------------------------
     
     path('fund/',views.FundList,name='fund-list'),
