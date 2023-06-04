@@ -12,6 +12,25 @@ from .models import *
 from .serializers import *
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from django.http import JsonResponse
+from rest_framework_simplejwt.tokens import AccessToken
+
+@api_view(['POST'])
+def login(request):
+    email = request.data.get('email')
+    password = request.data.get('password')
+
+    # Perform your authentication logic here (e.g., check credentials)
+
+    # Assuming authentication is successful, generate the JWT token
+    user = User.objects.get(email=email)
+    token = AccessToken.for_user(user)
+
+    # Add the 'role' attribute to the token payload
+    token['role'] = user.role
+
+    return Response({'access': str(token)})
+
 class HomeView(APIView):
      
     permission_classes = (IsAuthenticated, )   
