@@ -40,7 +40,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     STATUS_CHOICES = (
         
-        ('EMPLOYEE ', 'Employee'),
+        ('EMPLOYEE', 'Employee'),
         ('SOCIAL WORK COMITTEE', 'Social Work Comittee'),
 
     )
