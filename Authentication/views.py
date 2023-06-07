@@ -14,6 +14,19 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from django.http import JsonResponse
 from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework import status
+
+from rest_framework.generics import GenericAPIView
+from rest_framework.permissions import AllowAny
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth import get_user_model
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from django.core.mail import send_mail
+
+
+    
 
 @api_view(['POST'])
 def login(request):
@@ -29,7 +42,7 @@ def login(request):
     # Add the 'role' attribute to the token payload
     token['role'] = user.role
 
-    return Response({'access': str(token)})
+    return Response({'access': str(token)}, status=status.HTTP_200_OK)
 
 class HomeView(APIView):
      

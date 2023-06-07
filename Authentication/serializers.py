@@ -1,10 +1,17 @@
 from rest_framework import serializers
 from .models import *
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
+from djoser.serializers import UserCreateSerializer as BaseUserCreateSerializer
+ 
+class UserCreateSerializer(BaseUserCreateSerializer):
+    class Meta(BaseUserCreateSerializer.Meta):
         model = User
         fields = '__all__'
+class UserSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField()    
+    class Meta:
+        model = User
+        fields = ['email']
+     
 
 class FundSerializer(serializers.ModelSerializer):
     class Meta:

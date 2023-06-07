@@ -103,8 +103,8 @@ class Article(models.Model):
     
 class Program(models.Model):
     
-    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE,null = True, related_name='programs')
-    description = models.TextField(max_length=100)
+    article = models.OneToOneField(Article, on_delete=models.CASCADE,null = True, related_name='programs')
+    description = models.TextField(max_length=1000)
     
     def __str__(self):
         return self.article.title
